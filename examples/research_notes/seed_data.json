@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "name": "Research Atlas",
+      "type": "research_domain",
+      "parent_path": "",
+      "summary": "Root of the synthetic public research atlas.",
+      "confidence": 1.0
+    },
+    {
+      "name": "Research Notes",
+      "type": "research_domain",
+      "parent_path": "Research Atlas",
+      "summary": "Collection of evidence-linked research notes.",
+      "confidence": 1.0
+    }
+  ],
+  "edges": [
+    {
+      "source": "Research Atlas",
+      "target": "Research Notes",
+      "type": "contains",
+      "label": "contains",
+      "summary": "The atlas contains the research notes collection."
+    }
+  ]
+}

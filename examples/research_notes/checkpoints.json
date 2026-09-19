@@ -1,0 +1,11 @@
+[
+  {
+    "name": "verify_evidence_link.v1",
+    "version": "1.0",
+    "checkpoint_type": "evidence_link",
+    "description": "Require every proposed finding to include a derived_from evidence edge.",
+    "required_inputs": ["proposed_nodes", "proposed_edges"],
+    "pass_conditions": ["has_derived_from_edge"],
+    "failure_conditions": ["no_derived_from_edge_present"]
+  }
+]

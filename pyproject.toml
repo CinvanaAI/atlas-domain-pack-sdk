@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atlas-domain-pack-sdk"
+version = "0.1.0"
+description = "Offline authoring contract and validator for Atlas domain packs."
+readme = "README.md"
+requires-python = ">=3.11"
+license = {file = "LICENSE.md"}
+authors = [{name = "Cinvana Lab"}]
+
+[project.scripts]
+atlas-sdk-validate-pack = "atlas_domain_pack_sdk.validate_pack:main"
+
+[tool.setuptools.packages.find]
+include = ["atlas_domain_pack_sdk*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

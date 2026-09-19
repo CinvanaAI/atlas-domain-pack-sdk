@@ -1,0 +1,16 @@
+[
+  {
+    "type_name": "contains",
+    "description": "A research collection contains a child node.",
+    "allowed_source_types": ["research_domain"],
+    "allowed_target_types": ["research_domain", "finding"],
+    "version": "1.0"
+  },
+  {
+    "type_name": "derived_from",
+    "description": "A finding is grounded in a source fragment.",
+    "allowed_source_types": ["finding"],
+    "allowed_target_types": [],
+    "version": "1.0"
+  }
+]

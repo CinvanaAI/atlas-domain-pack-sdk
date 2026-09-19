@@ -1,0 +1,16 @@
+[
+  {
+    "type_name": "research_domain",
+    "description": "A top-level research collection.",
+    "required_fields": ["name"],
+    "allowed_parent_types": ["research_domain"],
+    "version": "1.0"
+  },
+  {
+    "type_name": "finding",
+    "description": "A claim or conclusion tied to source evidence.",
+    "required_fields": ["name"],
+    "allowed_parent_types": ["research_domain"],
+    "version": "1.0"
+  }
+]

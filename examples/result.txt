@@ -1,0 +1,78 @@
+{
+  "valid_pack": {
+    "pack_name": "research_notes",
+    "passed": true,
+    "files": {
+      "pack_manifest.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "node_types.json": {
+        "valid": 2,
+        "errors": []
+      },
+      "edge_types.json": {
+        "valid": 2,
+        "errors": []
+      },
+      "procedures.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "checkpoints.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "packet_templates.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "seed_data.json": {
+        "valid": 2,
+        "errors": []
+      }
+    },
+    "warnings": [],
+    "errors": []
+  },
+  "broken_pack": {
+    "pack_name": "research_notes",
+    "passed": false,
+    "files": {
+      "pack_manifest.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "node_types.json": {
+        "valid": 2,
+        "errors": []
+      },
+      "edge_types.json": {
+        "valid": 2,
+        "errors": []
+      },
+      "procedures.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "checkpoints.json": {
+        "valid": 1,
+        "errors": []
+      },
+      "packet_templates.json": {
+        "valid": 1,
+        "errors": [
+          "research_claim: references unknown checkpoint 'missing_checkpoint.v1'."
+        ]
+      },
+      "seed_data.json": {
+        "valid": 2,
+        "errors": []
+      }
+    },
+    "warnings": [],
+    "errors": [
+      "packet_templates.json: research_claim: references unknown checkpoint 'missing_checkpoint.v1'."
+    ]
+  }
+}

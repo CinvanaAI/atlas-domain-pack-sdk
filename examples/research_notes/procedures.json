@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Research.Extract.EvidenceLinkedFinding.v1",
+    "version": "1.0",
+    "procedure_type": "extraction",
+    "description": "Turn a source fragment into a proposed finding with an evidence edge.",
+    "input_requirements": ["source_fragment", "parent_atlas_path"],
+    "output_schema": "FindingNode + derived_from_edge",
+    "steps": [
+      "1. Read the source fragment.",
+      "2. State one bounded finding.",
+      "3. Assign a confidence score.",
+      "4. Link the finding to its source fragment with a derived_from edge."
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "pack_name": "research_notes",
+  "version": "1.0",
+  "description": "A synthetic domain for evidence-linked research notes and findings.",
+  "depends_on": []
+}

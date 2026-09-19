@@ -1,0 +1,18 @@
+[
+  {
+    "template_name": "research_claim",
+    "detected_type": "research_claim",
+    "description": "Create a bounded, evidence-linked finding from a research source fragment.",
+    "risk_tier": "medium",
+    "requires_high_reasoning": false,
+    "free_first_worker_allowed": true,
+    "can_be_preprocessed_locally": true,
+    "requires_human_review": false,
+    "applicable_procedures": ["Research.Extract.EvidenceLinkedFinding.v1"],
+    "applicable_lenses": [],
+    "applicable_lenses_conditional": [],
+    "required_checkpoints": ["verify_evidence_link.v1"],
+    "required_output_schema": "FindingNode",
+    "confidence_threshold_for_auto_commit": 0.8
+  }
+]
