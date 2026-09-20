@@ -209,7 +209,7 @@ Edges are matched by source+target+type; duplicates are skipped.
 
 Run validation without loading:
 ```
-python -m atlas_kernel.validate_pack domain_packs/your_pack_name
+python -m atlas_domain_pack_sdk.validate_pack domain_packs/your_pack_name
 ```
 
 On pass:
@@ -250,9 +250,9 @@ Errors: 2
 ## How to add a new pack without touching the kernel
 
 1. Create `domain_packs/your_pack_name/` with the required files.
-2. Run validation: `python -m atlas_kernel.validate_pack domain_packs/your_pack_name`
+2. Run validation: `python -m atlas_domain_pack_sdk.validate_pack domain_packs/your_pack_name`
 3. Fix any errors.
-4. Load the pack in your script:
+4. With Atlas Kernel installed separately, load the pack in your script:
    ```python
    loader = DomainPackLoader()
    loader.load_pack(Path("domain_packs/your_pack_name"), registry, repo)

@@ -35,44 +35,125 @@
     "warnings": [],
     "errors": []
   },
-  "broken_pack": {
-    "pack_name": "research_notes",
-    "passed": false,
-    "files": {
-      "pack_manifest.json": {
-        "valid": 1,
-        "errors": []
+  "rejected_edits": {
+    "unknown_checkpoint": {
+      "pack_name": "research_notes",
+      "passed": false,
+      "files": {
+        "pack_manifest.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "node_types.json": {
+          "valid": 2,
+          "errors": []
+        },
+        "edge_types.json": {
+          "valid": 2,
+          "errors": []
+        },
+        "procedures.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "checkpoints.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "packet_templates.json": {
+          "valid": 1,
+          "errors": [
+            "research_claim: references unknown checkpoint 'missing_checkpoint.v1'."
+          ]
+        },
+        "seed_data.json": {
+          "valid": 2,
+          "errors": []
+        }
       },
-      "node_types.json": {
-        "valid": 2,
-        "errors": []
-      },
-      "edge_types.json": {
-        "valid": 2,
-        "errors": []
-      },
-      "procedures.json": {
-        "valid": 1,
-        "errors": []
-      },
-      "checkpoints.json": {
-        "valid": 1,
-        "errors": []
-      },
-      "packet_templates.json": {
-        "valid": 1,
-        "errors": [
-          "research_claim: references unknown checkpoint 'missing_checkpoint.v1'."
-        ]
-      },
-      "seed_data.json": {
-        "valid": 2,
-        "errors": []
-      }
+      "warnings": [],
+      "errors": [
+        "packet_templates.json: research_claim: references unknown checkpoint 'missing_checkpoint.v1'."
+      ]
     },
-    "warnings": [],
-    "errors": [
-      "packet_templates.json: research_claim: references unknown checkpoint 'missing_checkpoint.v1'."
-    ]
+    "missing_checkpoint_file": {
+      "pack_name": "research_notes",
+      "passed": false,
+      "files": {
+        "pack_manifest.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "node_types.json": {
+          "valid": 2,
+          "errors": []
+        },
+        "edge_types.json": {
+          "valid": 2,
+          "errors": []
+        },
+        "procedures.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "packet_templates.json": {
+          "valid": 1,
+          "errors": [
+            "research_claim: references unknown checkpoint 'verify_evidence_link.v1'."
+          ]
+        },
+        "seed_data.json": {
+          "valid": 2,
+          "errors": []
+        }
+      },
+      "warnings": [],
+      "errors": [
+        "packet_templates.json: research_claim: references unknown checkpoint 'verify_evidence_link.v1'."
+      ]
+    },
+    "non_object_definition": {
+      "pack_name": "research_notes",
+      "passed": false,
+      "files": {
+        "pack_manifest.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "node_types.json": {
+          "valid": 0,
+          "errors": [
+            "definitions must be an array of objects"
+          ]
+        },
+        "edge_types.json": {
+          "valid": 2,
+          "errors": []
+        },
+        "procedures.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "checkpoints.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "packet_templates.json": {
+          "valid": 1,
+          "errors": []
+        },
+        "seed_data.json": {
+          "valid": 2,
+          "errors": []
+        }
+      },
+      "warnings": [
+        "seed_data.json: node 'Research Atlas' has type 'research_domain' not defined in node_types.json",
+        "seed_data.json: node 'Research Notes' has type 'research_domain' not defined in node_types.json"
+      ],
+      "errors": [
+        "node_types.json: definitions must be an array of objects"
+      ]
+    }
   }
 }

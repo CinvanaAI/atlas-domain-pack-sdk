@@ -1,36 +1,54 @@
 # Atlas Domain Pack SDK
 
-Design an Atlas domain pack and catch broken definitions before running a graph.
+Author the definitions that tell Atlas which graph objects, work packets and checkpoints a domain needs. Validate those definitions before loading a database. This is the kernel's authoring boundary extracted into a small independent package; both repositories retain a validator so each remains usable on its own. [Origin](ORIGIN.md)
 
-Author an Atlas domain pack and catch malformed definitions or cross-file references before loading a database.
+## Edit a pack and see what fails
 
-## See it work
-
-**Input:** The seven-file Research Notes example and a copy with missing_checkpoint.v 1.
-
-**Result:** The original pack passes; the changed template reports its unknown checkpoint.
-
-[Read the captured output](examples/result.txt) | [Inspect the example](examples/walkthrough.py)
-
-Python 3.11 or newer. From the repository root:
+Python 3.11+, from this checkout:
 
 ```sh
 python -m pip install -e .
 python -m examples.walkthrough
+atlas-sdk-validate-pack examples/research_notes
+python -m atlas_domain_pack_sdk.validate_pack examples/research_notes --json
+python -m pip install pytest
+python -m pytest -q
 ```
 
-The example uses synthetic material and runs offline. The captured output comes from executing this example, not a hand-written mockup.
+The [walkthrough](examples/walkthrough.py) validates [Research Notes](examples/research_notes), then uses disposable copies to demonstrate three rejected edits: an unknown checkpoint, a missing checkpoint file still required by a template, and a non-object definition. [The captured result](examples/result.txt) includes the exact per-file reports.
 
-## How it works
+To try your own domain, copy the example directory, change its manifest identity, and edit the definitions. Run the validator after each edit; exit code 0 means its structural checks passed, 1 means failure.
 
-A pack is a directory of JSON definitions. The validator checks files, duplicate types, and supported cross-file references without creating a database. The walkthrough validates the supplied Research Notes pack, then changes one checkpoint reference in a temporary copy to show the exact failure.
+| File | Author's decision |
+| --- | --- |
+| [pack_manifest.json](examples/research_notes/pack_manifest.json) | Pack identity and version |
+| [node_types.json](examples/research_notes/node_types.json) | Kinds of graph objects |
+| [edge_types.json](examples/research_notes/edge_types.json) | Kinds of relationships |
+| [procedures.json](examples/research_notes/procedures.json) | Described processing steps |
+| [checkpoints.json](examples/research_notes/checkpoints.json) | Named verification conditions |
+| [packet_templates.json](examples/research_notes/packet_templates.json) | Work shape and required checkpoint references |
+| [seed_data.json](examples/research_notes/seed_data.json) | Synthetic starting graph |
 
-Implementation: [atlas_domain_pack_sdk/validate_pack.py](atlas_domain_pack_sdk/validate_pack.py), [atlas_domain_pack_sdk/validators.py](atlas_domain_pack_sdk/validators.py), [examples/research_notes](examples/research_notes).
+## Consume the report
 
-## Limits
+```python
+from pathlib import Path
+from atlas_domain_pack_sdk.validate_pack import validate_pack_dir
+import tempfile
+with tempfile.TemporaryDirectory() as folder:
+    report = validate_pack_dir(Path(folder))
+    assert report["passed"] is False
+    assert report["files"]["pack_manifest.json"]["errors"]
+```
 
-Structural validation does not establish the truth of seed data or the quality of a procedure. Runtime checkpoint execution belongs to Atlas Kernel. The SDK command is `atlas-sdk-validate-pack`; Atlas Kernel keeps `atlas-validate-pack`, so both can be installed together. The module form is `python -m atlas_domain_pack_sdk.validate_pack examples/research_notes`.
+[validate_pack.py](atlas_domain_pack_sdk/validate_pack.py) checks file shapes, duplicate type names and supported references; [validators.py](atlas_domain_pack_sdk/validators.py) checks individual definitions. Read both errors and warnings: some unresolved optional references produce warnings rather than failure.
 
-[Reference and CLI details](docs/REFERENCE.md) | [Origin](ORIGIN.md) | [MIT license](LICENSE.md)
+## What a pass means
 
-Required checkpoint names must resolve even when `checkpoints.json` is missing or empty. A pack may omit that file only when its templates do not require those checkpoints.
+It is a structural authoring check, not proof of seed-data truth or procedure quality. Runtime condition execution belongs to [Atlas Kernel](https://github.com/CinvanaAI/atlas-kernel). Defining a new condition string does not implement it: the kernel must explicitly support that condition, and unknown conditions fail runtime verification.
+
+The SDK command is `atlas-sdk-validate-pack`; the kernel uses `atlas-validate-pack`, so both can be installed together. Pack contents never cause a database or model call here.
+
+The next useful improvement is a shared versioned validation contract between SDK and kernel, so compatible changes cannot drift between their self-contained copies.
+
+[Authoring contract](DOMAIN_PACK_SPEC.md) · [Reference](docs/REFERENCE.md) · [License](LICENSE.md)

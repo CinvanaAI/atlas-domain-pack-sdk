@@ -65,13 +65,42 @@ def validate_pack_dir(pack_dir: Path) -> dict:
     def load_json_file(path: Path, filename: str):
         try:
             with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
+                payload = json.load(f)
         except FileNotFoundError:
             add_error(filename, f"File not found")
             return None
         except json.JSONDecodeError as e:
             add_error(filename, f"Invalid JSON: {e}")
             return None
+
+        # Reject malformed author input before consumers call .get or build
+        # reference sets. Keep the CLI's per-file failed-report contract.
+        def objects(value, location):
+            if not isinstance(value, list) or any(not isinstance(item, dict) for item in value):
+                add_error(filename, f"{location} must be an array of objects")
+                return False
+            for item in value:
+                for key in ("type_name", "name", "template_name", "type", "source", "target"):
+                    if key in item and not isinstance(item[key], str):
+                        add_error(filename, f"{location}: {key} must be a string")
+                        return False
+                for key in ("required_checkpoints", "compatible_procedure_ids"):
+                    if key in item and (not isinstance(item[key], list) or
+                                        any(not isinstance(ref, str) for ref in item[key])):
+                        add_error(filename, f"{location}: {key} must be an array of strings")
+                        return False
+            return True
+
+        if filename in {"pack_manifest.json", "seed_data.json"}:
+            if not isinstance(payload, dict):
+                add_error(filename, "Must be a JSON object")
+                return None
+            if filename == "seed_data.json":
+                if not objects(payload.get("nodes", []), "nodes") or not objects(payload.get("edges", []), "edges"):
+                    return None
+        elif not objects(payload, "definitions"):
+            return None
+        return payload
 
     # --- pack_manifest.json (required) ---
     manifest_path = pack_dir / "pack_manifest.json"
